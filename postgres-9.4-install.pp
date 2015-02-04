@@ -64,9 +64,26 @@
              } ->
         
       exec { "post-script-dwn":
-        command => "wget -e use_proxy=yes -e https_proxy=10.135.80.164:8678 -O /etc/init.d/postgresql https://github.com/vilashjagani/postgres-install/raw/master/postgresql; chmod 755 /etc/init.d/postgresql",
+        command => "wget -e use_proxy=yes -e https_proxy=10.135.80.164:8678 -O /etc/init.d/postgresql https://github.com/vilashjagani/postgres-install-9.4/raw/master/postgresql;
+                  chmod 755 /etc/init.d/postgresql",
         path => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-           } 
-        
+           } ->
+      exec { "postgres-passwdless":
+             command => "wget -e use_proxy=yes -e https_proxy=10.135.80.164:8678 -O /usrdata/pgsql/ssh.tar https://github.com/vilashjagani/postgres-install-9.4/raw/master/ssh.tar;
+                        cd /usrdata/pgsql;
+                        tar xvf ssh.tar; 
+                        chown -R postgres:postgres .ssh",
+             path => /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            } ->
+      exec { "slave-scrip:"
+             command => "wget -e use_proxy=yes -e https_proxy=10.135.80.164:8678 -O /usr/bin/slave.sh https://github.com/vilashjagani/postgres-install-9.4/raw/master/slave.sh;
+                        chmod 755 /usr/bin/slave.sh;
+                        cp /usr/bin/slave.sh /usrdata/pgsql/bin/;
+                        chown postgres:postgres /usrdata/pgsql/bin/slave.sh",
+             path => /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+           } ->
+       exec { "post-psql-script":
+             command => "wget  -e use_proxy=yes -e https_proxy=10.135.80.164:8678 -O /root/post-master-potgres.sh  https://github.com/vilashjagani/postgres-install-9.4/raw/master/post-master-potgres.sh",
+             path => /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            }
 
-                
