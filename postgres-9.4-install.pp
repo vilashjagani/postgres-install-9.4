@@ -17,7 +17,6 @@
                   managehome => true,
                   home => '/usrdata/pgsql',
                   shell => '/bin/bash',
-                  password => '$1$cjvVjeZF$D3cgBF3e2gBFTGxZW8F440',
                  } ->
            exec {"postgress-install":
                   command => "mkdir -p /usrdata/pgsql;mkdir /usrdata/source;wget -e use_proxy=yes -e https_proxy=10.135.80.164:8678 -O /usrdata/source/postgresql-9.4.0.tar.bz2  https://ftp.postgresql.org/pub/source/v9.4.0/postgresql-9.4.0.tar.bz2;cd /usrdata/source;tar jxvf postgresql-9.4.0.tar.bz2;cd /usrdata/source/postgresql-9.4.0;./configure --prefix=/usrdata/pgsql --with-ossp-uuid --with-openssl; make && make install;cd /usrdata/source/postgresql-9.4.0/contrib;make && make install;mkdir -p /usrdata/pgsql/logs;chown -R postgres:postgres /usrdata/pgsql;su postgres -c '/usrdata/pgsql/bin/initdb --pgdata=/usrdata/pgsql/data --encoding=UTF8';",
