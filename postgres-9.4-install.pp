@@ -67,13 +67,7 @@
                   chmod 755 /etc/init.d/postgresql",
         path => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
            } ->
-      exec { "postgres-passwdless":
-             command => "wget -e use_proxy=yes -e https_proxy=10.135.80.164:8678 -O /usrdata/pgsql/ssh.tar https://github.com/vilashjagani/postgres-install-9.4/raw/master/ssh.tar;
-                        cd /usrdata/pgsql;
-                        tar xvf ssh.tar; 
-                        chown -R postgres:postgres .ssh",
-             path => /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-            } ->
+      
       exec { "slave-scrip:"
              command => "wget -e use_proxy=yes -e https_proxy=10.135.80.164:8678 -O /usr/bin/slave.sh https://github.com/vilashjagani/postgres-install-9.4/raw/master/slave.sh;
                         chmod 755 /usr/bin/slave.sh;
