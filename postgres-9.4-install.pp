@@ -44,21 +44,21 @@
                           echo \"autovacuum_naptime = 10080min\" >> /usrdata/pgsql/data/postgresql.conf;
                           echo \"autovacuum_vacuum_threshold = 1000\" >> /usrdata/pgsql/data/postgresql.conf;
                           echo \"#host replication replicator  MASTER-SRV-IP/32 md5\" >> /usrdata/pgsql/data/pg_hba.conf;
-                          echo \"host replication replicator  192.168.59.35/32 md5\" >> /usrdata/pgsql/data/pg_hba.conf;
+                          
                           echo \"#host replication replicator  SLAVE-SRV-IP/32 md5\" >> /usrdata/pgsql/data/pg_hba.conf;
-                          echo \"host replication replicator  192.168.59.30/32 md5\" >> /usrdata/pgsql/data/pg_hba.conf;
+                          
                           echo \"#host all replicator  PGPOOL-1-IP/32 trust\" >> /usrdata/pgsql/data/pg_hba.conf;
-                          echo \"host all replicator  192.168.59.38/32 trust\" >> /usrdata/pgsql/data/pg_hba.conf;
+                          
                           echo \"#host all replicator  PGPOOL-2-IP/32 trust\" >> /usrdata/pgsql/data/pg_hba.conf;
-                          echo \"host all replicator  192.168.59.51/32 trust\" >> /usrdata/pgsql/data/pg_hba.conf;
+                          
                           echo \"#host all postgres  PGPOOL-1-IP/32 trust\" >> /usrdata/pgsql/data/pg_hba.conf;
-                          echo \"host all postgres  192.168.59.38/32 trust\" >> /usrdata/pgsql/data/pg_hba.conf;
+                          
                           echo \"#host all postgres  PGPOOL-2-IP/32 trust\" >> /usrdata/pgsql/data/pg_hba.conf;
-                          echo \"host all postgres  192.168.59.51/32 trust\" >> /usrdata/pgsql/data/pg_hba.conf;
+                         
                           echo \"#host all pgpool  PGPOOL-1-IP/32 trust\" >> /usrdata/pgsql/data/pg_hba.conf;
-                          echo \"host all pgpool  192.168.59.38/32 trust\" >> /usrdata/pgsql/data/pg_hba.conf;
-                          echo \"#host all pgpool  PGPOOL-2-IP/32 trust\" >> /usrdata/pgsql/data/pg_hba.conf;
-                          echo \"host all pgpool  192.168.59.51/32 trust\" >> /usrdata/pgsql/data/pg_hba.conf;",
+                          
+                          echo \"#host all pgpool  PGPOOL-2-IP/32 trust\" >> /usrdata/pgsql/data/pg_hba.conf;",
+                         
                path => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
              } ->
         
