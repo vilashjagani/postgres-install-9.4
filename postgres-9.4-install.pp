@@ -44,19 +44,12 @@
                           echo \"autovacuum_naptime = 10080min\" >> /usrdata/pgsql/data/postgresql.conf;
                           echo \"autovacuum_vacuum_threshold = 1000\" >> /usrdata/pgsql/data/postgresql.conf;
                           echo \"#host replication replicator  MASTER-SRV-IP/32 md5\" >> /usrdata/pgsql/data/pg_hba.conf;
-                          
                           echo \"#host replication replicator  SLAVE-SRV-IP/32 md5\" >> /usrdata/pgsql/data/pg_hba.conf;
-                          
                           echo \"#host all replicator  PGPOOL-1-IP/32 trust\" >> /usrdata/pgsql/data/pg_hba.conf;
-                          
                           echo \"#host all replicator  PGPOOL-2-IP/32 trust\" >> /usrdata/pgsql/data/pg_hba.conf;
-                          
                           echo \"#host all postgres  PGPOOL-1-IP/32 trust\" >> /usrdata/pgsql/data/pg_hba.conf;
-                          
                           echo \"#host all postgres  PGPOOL-2-IP/32 trust\" >> /usrdata/pgsql/data/pg_hba.conf;
-                         
                           echo \"#host all pgpool  PGPOOL-1-IP/32 trust\" >> /usrdata/pgsql/data/pg_hba.conf;
-                          
                           echo \"#host all pgpool  PGPOOL-2-IP/32 trust\" >> /usrdata/pgsql/data/pg_hba.conf;",
                          
                path => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
@@ -68,15 +61,15 @@
         path => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
            } ->
       
-      exec { "slave-scrip:"
+      exec { "slave-scrip":
              command => "wget -e use_proxy=yes -e https_proxy=10.135.80.164:8678 -O /usr/bin/slave.sh https://github.com/vilashjagani/postgres-install-9.4/raw/master/slave.sh;
                         chmod 755 /usr/bin/slave.sh;
                         cp /usr/bin/slave.sh /usrdata/pgsql/bin/;
-                        chown postgres:postgres /usrdata/pgsql/bin/slave.sh",
-             path => /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                        chown postgres:postgres /usrdata/pgsql/bin/slave.sh;",
+             path => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
            } ->
        exec { "post-psql-script":
              command => "wget  -e use_proxy=yes -e https_proxy=10.135.80.164:8678 -O /root/post-master-potgres.sh  https://github.com/vilashjagani/postgres-install-9.4/raw/master/post-master-potgres.sh",
-             path => /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+             path => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
             }
 
