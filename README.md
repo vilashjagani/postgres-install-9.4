@@ -16,7 +16,11 @@
         https_proxy_host = x.x.x.x
         
         https_proxy_port = port-number
-       
+
+
+        install ssh-keygen module 
+
+        #puppet module install maestrodev-ssh_keygen      
 2) Download postgres-9.4-install.pp puppet manifest and install 
       
        wget https://github.com/vilashjagani/postgres-install-9.4/raw/master/postgres-9.4-install.pp
