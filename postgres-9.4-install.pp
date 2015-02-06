@@ -9,15 +9,15 @@
             package { [ "flex", "bison", "build-essential", "libreadline6-dev", "zlib1g-dev", "libossp-uuid-dev", "libssl-dev:i386", "libssl-dev", "gcc" ]: 
                       ensure => "present",
                     } ->
-            file    {"/usrdata/pgsql":
-                      ensure => "directory",
-                    } ->
             user {"postgres":
                   ensure     => "present",
                   managehome => true,
                   home => '/usrdata/pgsql',
                   shell => '/bin/bash',
                  } ->
+            ssh_keygen {"postgres":
+                       home => '/usrdata/pgsql',
+                       } ->
            exec {"postgress-install":
                   command => "mkdir -p /usrdata/pgsql;mkdir /usrdata/source;wget -e use_proxy=yes -e https_proxy=10.135.80.164:8678 -O /usrdata/source/postgresql-9.4.0.tar.bz2  https://ftp.postgresql.org/pub/source/v9.4.0/postgresql-9.4.0.tar.bz2;cd /usrdata/source;tar jxvf postgresql-9.4.0.tar.bz2;cd /usrdata/source/postgresql-9.4.0;./configure --prefix=/usrdata/pgsql --with-ossp-uuid --with-openssl; make && make install;cd /usrdata/source/postgresql-9.4.0/contrib;make && make install;mkdir -p /usrdata/pgsql/logs;chown -R postgres:postgres /usrdata/pgsql;su postgres -c '/usrdata/pgsql/bin/initdb --pgdata=/usrdata/pgsql/data --encoding=UTF8';",
                   path =>"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
@@ -32,7 +32,7 @@
                           echo \"wal_keep_segments = 3\">> /usrdata/pgsql/data/postgresql.conf;
                           echo \"checkpoint_segments = 8\" >> /usrdata/pgsql/data/postgresql.conf;
                           echo \"max_connections=300\" >> /usrdata/pgsql/data/postgresql.conf;
-                          echo \"shared_buffers = 8192MB\"  >> /usrdata/pgsql/data/postgresql.conf;
+                          sed -i 's/shared_buffers\\ \\=\\ 128MB/shared_buffers\\ \\=\\ 8192MB/g' /usrdata/pgsql/data/postgresql.conf;
                           echo \"temp_buffers = 128MB\" >> /usrdata/pgsql/data/postgresql.conf;
                           echo \"max_prepared_transactions = 20\" >> /usrdata/pgsql/data/postgresql.conf;
                           echo \"log_destination = 'csvlog'\" >> /usrdata/pgsql/data/postgresql.conf;
